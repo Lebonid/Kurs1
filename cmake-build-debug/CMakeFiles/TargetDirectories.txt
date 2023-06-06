@@ -1,0 +1,3 @@
+C:/Users/Leo/CLionProjects/kursov/cmake-build-debug/CMakeFiles/kursov.dir
+C:/Users/Leo/CLionProjects/kursov/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Leo/CLionProjects/kursov/cmake-build-debug/CMakeFiles/rebuild_cache.dir
