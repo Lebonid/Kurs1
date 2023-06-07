@@ -1,146 +1,162 @@
 #include "functions.h"
 
-int inputInt(string message) {
+int inputInt(string message){
     int n;
     cout << message << endl;
     while(!(cin >> n)){
-        cout << "" << endl;
+        cout << "Error don't number" << endl;
         cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(),'\n');
-        cout <<  message;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');;
+        cout << message;
     }
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');;
     return n;
 }
 
-int inputInt(string message, int min, int max) {
-    int n;
-    do{
-        cout << message << endl;
-        if(!(cin >> n) || (n < min)||(n > max)){
-            cout << "Размер должен быть больше" << min << " и меньше" << max << endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
-    }while((n < min)||(n > max));
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    return 0;
-}
-
-string inputString(string message) {
-    string str = "";
-    while(str.empty()){
-        cout << message << endl;
-        getline(cin, str, '\n');
-    };
-    return str;
-}
-
-string checkOpenInputFile(string message) {
-    string fileName;
-    bool isOpen = false;
-    while(!isOpen){
-        fileName = inputString(message);
-        ifstream fs(fileName, ios::in);
-        if(!fs.is_open()){
-            cout << "Ошибка. Имя или путь к файлу неправильный.\\n";
-            isOpen = false;
-        }else{
-            fs.close();
-            isOpen = true;
-        }
-    }
-    return fileName;
-}
-
-string checkOpenOutputFile(string message) {
-    string fileName;
+string checkOpenInputFile(string message){
+    string filename;
     bool is_open = false;
-    while (!is_open) {
-        fileName = inputString(message);
-        ofstream fs(fileName, ios::out);
-
-        if (!fs.is_open()) // fs.is_open()
-        {
-            cout << "Ошибка. Имя или путь к файлу неправильный.\n";
+    while(!is_open){
+        filename = inputString(message);
+        ifstream ifs(filename, ios::in);
+        if(!ifs.is_open()){
+            cout << "Error. Path File is Not Corrected";
             is_open = false;
-        }
-        else {
-            fs.close();
+        }else{
+            ifs.close();
             is_open = true;
         }
     }
-    return fileName;
+    return filename;
 }
 
-int switchLine(int current_index, int array_length, bool under) {
-    int count = 0;
-    if(under){
-        count = inputInt("Введите смещение вниз: ", 0 , (array_length-current_index-1));
-        return current_index + count;
-    }else{
-        count = inputInt("Введите смещение вверх ", 0, current_index);
-        return current_index - count;
-    }
-}
-
-void readFile(string *mass, int &array_length) {
+string checkOpenOutputFile(string message){
     string filename;
-    filename = checkOpenInputFile("Введите название файла для чтения:");
-    ifstream fin(filename, ios::in);
+    bool is_open = false;
+    while(!is_open){
+        filename = inputString(message);
+        ofstream ofs(filename, ios::out);
+        if(!ofs.is_open()){
+            cout << "Error. Path File is Not Corrected";
+            is_open = false;
+        }else{
+            ofs.close();
+            is_open = true;
+        }
+    }
+    return filename;
+}
 
+void readFile(string* mass, int& array_length){
+    string filename;
+    filename = checkOpenInputFile("Enter name File (Reading): ");
+    ifstream ifs(filename, ios::in);
     array_length = 0;
-    while ((!fin.eof()) && (array_length < N))
-    {
-        getline(fin, mass[array_length]);
-        cout<<mass[array_length]<<endl;
+    while((!ifs.eof())&& (array_length < N)){
+        getline(ifs, mass[array_length]);
+        cout << mass[array_length] << endl;
         array_length++;
     }
-    fin.close();
-    cout << "Файл был считан." << endl;
+    ifs.close();
+    cout << "File Readied" << endl;
 }
 
-void saveFile(string *mass, int &array_length) {
+void saveFile(string* mass, int array_length){
     string filename;
-    filename = checkOpenOutputFile("Введите название файла для сохранения:");
-    ofstream fout(filename, ios::out);
-    for (int i = 0; i < array_length; i++) {
-        fout << mass[i] << endl;
+    filename = checkOpenOutputFile("Enter name File (Saving): ");
+    ofstream ofs(filename, ios::out);
+    for(int i = 0; i < array_length; i++){
+        ofs << mass[i] << endl;
     }
-    fout.close();
-    cout << "Файл был сохранен." << endl;
-}
+    ofs.close();
+    cout << "File Saving" << endl;
+};
 
-void addWord(string &input, string output) {
+void addWord(string& input, string output){
     size_t i = input.length();
     if(i == string::npos){
         return;
     }
     input.insert(i, output);
-    return;
 }
 
-void cycleAdd(string* mass, int &array_length, int current) {
+void cycleAdd(string* mass, int array_length, int current){
     string str;
-    int under = 0;
-    str = str.append(" ") + inputString("Введите слово");
-    cout << "Enter String" << endl;
-    cin >> under;
-    if(under == 0){
-        for(int i = 0; i <= current; i++){
-            addWord(mass[i], str);
-            cout << mass[i] << endl;
-        }
-    }else if(under == 1){
-        for(int i = 0; i < array_length; i++){
-            addWord(mass[i], str);
-            cout << mass[i] << endl;
-        }
+    bool under = false;
+    str = str.append(" ") + inputString("Enter Word");
+    for(int i = current; i <= current; i++) {
+        addWord(mass[i], str);
     }
 }
 
+string inputString(string message){
+    string str = "";
+    while(str.empty()){
+        cout << message << endl;
+        getline(cin, str, '\n');
+    }
+    return str;
+}
 
+int switchLine(int current_index, int array_length, bool under) {
+    int count = 0;
+    if(under){
+        count = inputInt("Switch Down");
+        return current_index +  count;
+    }else{
+        count = inputInt("Switch Up");
+        return current_index - count;
+    }
+}
 
+void outContext(string *mass, int array_length, int current) {
+    int lines_count;
+    lines_count = inputInt("Enter number Line");
+    for(int i = current; i < (current + lines_count); i++){
+        cout << "Line number" << i + 1 << " = " << *(mass + i) << endl;
+    }
+}
 
+void deleteWord(string &input, string output) {
+    size_t i = input.find(output);
+    int count = output.length();
+    if(i == string::npos){
+        return;
+    }
+    if(i < count){
+        count = i;
+    }
+    input.erase(i, count);
+    return;
 
+}
+
+void cycleDelete(string* mass, int array_length, int current) {
+    string str;
+    str = inputString("Enter word: ");
+    for(int i = current; i <= current; i++){
+        deleteWord(*mass, str);
+    }
+
+}
+
+void replaceWord(string &input, string output) {
+    size_t i = input.find(output);
+    int count = output.length();
+    if(i==string::npos) {
+        return;
+    }
+    if(i < count){
+        count = i;
+    }
+    input.replace(i, count, output);
+}
+
+void cycleReplace(string *mass, int array_length, int current) {
+    string str;
+    string ptr;
+    str = inputString("Enter String 1: ");
+    ptr = inputString("Enter String 2: ");
+    replaceWord(str, ptr);
+
+}

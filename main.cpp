@@ -1,55 +1,56 @@
 #include "functions.h"
 
 int main() {
-    setlocale(LC_ALL, "ru_RU.UTF-8");
-    string text_array[N];
+    int item;
+    string array_text[N];
     int array_length = 0;
     int selected_index = 0;
-    int item = 0;
-    do {
-        cout << "\n1 - Считать текст из файла";
-        cout << "\n2 - Смещение вверх";
-        cout << "\n3 - Смещение вниз";
-        cout << "\n4 - Буквы";
-        cout << "\n5 - Вставить слово";
-        cout << "\n6 - Заменить слово";
-        cout << "\n7 - Удалить слово";
-        cout << "\n8 - Сохранить текст в файл";
-        cout << "\n0 - Выход из программы";
-        cout << "\nВведите номер пункта меню:";
+    do{
+        cout << selected_index << endl;
+        cout << "\n1 - ReadFile";
+        cout << "\n2 - AddWord";
+        cout << "\n3 - ReplaceWord";
+        cout << "\n4 - DeleteWord";
+        cout << "\n5 - Output Text N line";
+        cout << "\n6 - SaveFile";
+        cout << "\n7 - Up line";
+        cout << "\n8 - Down line";
+        cout << "\n0 - Exit";
+        cout << "\nChoice point : ";
         cin >> item;
-
-        switch (item) {
-            case 0:
-                break;
-            case 1:
-                readFile(text_array, array_length);
+        switch(item){
+            case 1 :
+                readFile(array_text, array_length);
                 break;
             case 2:
-                selected_index = switchLine(selected_index, array_length, false);
+                cycleAdd(array_text, array_length, selected_index);
                 break;
             case 3:
-                selected_index = switchLine(selected_index, array_length, true);
+                cycleReplace(array_text, array_length, selected_index);
                 break;
             case 4:
-                cout << "буквы" << endl;
+                cycleDelete(array_text, array_length, selected_index);
                 break;
             case 5:
-                cycleAdd(text_array, array_length, selected_index);
+                outContext(array_text,array_length,selected_index);
                 break;
             case 6:
-                cout << "Заменить слово" << endl;
+                saveFile(array_text, array_length);
                 break;
             case 7:
-                cout << "Удалить слово" << endl;
+                selected_index = switchLine(selected_index, array_length,false);
                 break;
             case 8:
-                saveFile(text_array, array_length);
+                selected_index = switchLine(selected_index, array_length,true);
+                break;
+            case 0:
                 break;
             default:
-                cout << "Ошибка!\n" << endl;
+                cout << "Error!!!\n";
                 continue;
         }
-    } while (item != 0);
+    }while(item != 0);
     return 0;
 }
+
+

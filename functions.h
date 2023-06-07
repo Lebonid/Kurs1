@@ -1,19 +1,18 @@
 #include "header.h"
 
 int inputInt(string message);
-int inputInt(string message, int min, int max);
-string inputString(string message);
+
+int switchLine(int current_index, int array_length, bool under);
+void outContext(string* mass, int array_length, int current);
 
 string checkOpenInputFile(string message);
 string checkOpenOutputFile(string message);
-
-int switchLine(int current_index, int array_length, bool under);
-
-void addWord(string& input, string output); // вставить слово
-void replaceWord(); // заменить слово
-void deleteWord(); // удалить слово
-void cycleAdd(string* mass, int& array_length, int current);
-
-
-void readFile(string* mass, int& array_length); //читать файл
-void saveFile(string* mass, int& array_length); // сохранить файл
+void readFile(string* mass, int& array_length);
+void saveFile(string* mass, int array_length);
+void addWord(string &input, string output);
+void replaceWord(string &input, string output);
+void deleteWord(string &input, string output);
+void cycleAdd(string* mass, int array_length, int current);
+void cycleReplace(string* mass, int array_length, int current);
+void cycleDelete(string* mass, int array_length, int current);
+string inputString(string message);
