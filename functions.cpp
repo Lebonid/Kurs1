@@ -13,6 +13,17 @@ int inputInt(string message){
     return n;
 }
 
+string inputString(string message){
+    string str = "";
+    while(str.empty()){
+        cout << message << endl;
+        getline(cin, str, '\n');
+    }
+    return str;
+}
+
+//Проверка на файл
+
 string checkOpenInputFile(string message){
     string filename;
     bool is_open = false;
@@ -47,56 +58,7 @@ string checkOpenOutputFile(string message){
     return filename;
 }
 
-void readFile(string* mass, int& array_length){
-    string filename;
-    filename = checkOpenInputFile("Enter name File (Reading): ");
-    ifstream ifs(filename, ios::in);
-    array_length = 0;
-    while((!ifs.eof())&& (array_length < N)){
-        getline(ifs, mass[array_length]);
-        cout << mass[array_length] << endl;
-        array_length++;
-    }
-    ifs.close();
-    cout << "File Readied" << endl;
-}
-
-void saveFile(string* mass, int array_length){
-    string filename;
-    filename = checkOpenOutputFile("Enter name File (Saving): ");
-    ofstream ofs(filename, ios::out);
-    for(int i = 0; i < array_length; i++){
-        ofs << mass[i] << endl;
-    }
-    ofs.close();
-    cout << "File Saving" << endl;
-};
-
-void addWord(string& input, string output){
-    size_t i = input.length();
-    if(i == string::npos){
-        return;
-    }
-    input.insert(i, output);
-}
-
-void cycleAdd(string* mass, int array_length, int current){
-    string str;
-    bool under = false;
-    str = str.append(" ") + inputString("Enter Word");
-    for(int i = current; i <= current; i++) {
-        addWord(mass[i], str);
-    }
-}
-
-string inputString(string message){
-    string str = "";
-    while(str.empty()){
-        cout << message << endl;
-        getline(cin, str, '\n');
-    }
-    return str;
-}
+//Смена Сторок
 
 int switchLine(int current_index, int array_length, bool under) {
     int count = 0;
@@ -117,16 +79,63 @@ void outContext(string *mass, int array_length, int current) {
     }
 }
 
-void deleteWord(string &input, string output) {
-    size_t i = input.find(output);
-    int count = output.length();
+//Операций
+
+//Добавление слова
+void addWord(string& input, string output){
+    size_t i = input.length();
     if(i == string::npos){
         return;
     }
-    if(i < count){
-        count = i;
+    input.insert(i, output);
+}
+
+void cycleAdd(string* mass, int array_length, int current){
+    string str;
+    bool under = false;
+    str = str.append(" ") + inputString("Enter Word");
+    for(int i = current; i <= current; i++) {
+        addWord(mass[i], str);
     }
-    input.erase(i, count);
+}
+
+//Замена слова
+void replaceWord(string &input,string str, string output) {
+    size_t i = input.length();
+    int begin = input.find(str);
+    int count = output.length();
+    if(i==string::npos) {
+        return;
+    }
+    if(i < begin){
+        begin = count;
+    }
+    deleteWord(input,str);
+    input.replace(begin, count, output);
+}
+
+void cycleReplace(string *mass, int array_length, int current) {
+    string str;
+    string ptr;
+    str = inputString("Enter String 1: ");
+    ptr = inputString("Enter String 2: ");
+    for(int i = current; i<=current; i++){
+        replaceWord(mass[i], str, ptr);
+    }
+}
+
+// Удаление слова
+void deleteWord(string &input, string output) {
+    int count = output.length();
+    int begin = input.find(output);
+    size_t i = input.length();
+    if(i == string::npos){
+        return;
+    }
+    if(i<begin){
+        i = count;
+    }
+    input.erase(begin, count);
     return;
 
 }
@@ -135,28 +144,35 @@ void cycleDelete(string* mass, int array_length, int current) {
     string str;
     str = inputString("Enter word: ");
     for(int i = current; i <= current; i++){
-        deleteWord(*mass, str);
+        deleteWord(mass[i], str);
     }
-
 }
 
-void replaceWord(string &input, string output) {
-    size_t i = input.find(output);
-    int count = output.length();
-    if(i==string::npos) {
-        return;
+//Операций обращения к файлу
+//Чтение файла
+
+void readFile(string* mass, int& array_length){
+    string filename;
+    filename = checkOpenInputFile("Enter name File (Reading): ");
+    ifstream ifs(filename, ios::in);
+    array_length = 0;
+    while((!ifs.eof())&& (array_length < N)){
+        getline(ifs, mass[array_length]);
+        cout << mass[array_length] << endl;
+        array_length++;
     }
-    if(i < count){
-        count = i;
-    }
-    input.replace(i, count, output);
+    ifs.close();
+    cout << "File Readied" << endl;
 }
 
-void cycleReplace(string *mass, int array_length, int current) {
-    string str;
-    string ptr;
-    str = inputString("Enter String 1: ");
-    ptr = inputString("Enter String 2: ");
-    replaceWord(str, ptr);
-
-}
+//Сохрание файла
+void saveFile(string* mass, int array_length){
+    string filename;
+    filename = checkOpenOutputFile("Enter name File (Saving): ");
+    ofstream ofs(filename, ios::out);
+    for(int i = 0; i < array_length; i++){
+        ofs << mass[i] << endl;
+    }
+    ofs.close();
+    cout << "File Saving" << endl;
+};

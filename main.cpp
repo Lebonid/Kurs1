@@ -1,12 +1,13 @@
 #include "functions.h"
 
 int main() {
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     int item;
     string array_text[N];
     int array_length = 0;
     int selected_index = 0;
     do{
-        cout << selected_index << endl;
+        cout << "Current Line - " << selected_index + 1 ;
         cout << "\n1 - ReadFile";
         cout << "\n2 - AddWord";
         cout << "\n3 - ReplaceWord";

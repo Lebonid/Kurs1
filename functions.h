@@ -1,16 +1,14 @@
 #include "header.h"
 
 int inputInt(string message);
-
 int switchLine(int current_index, int array_length, bool under);
 void outContext(string* mass, int array_length, int current);
-
 string checkOpenInputFile(string message);
 string checkOpenOutputFile(string message);
 void readFile(string* mass, int& array_length);
 void saveFile(string* mass, int array_length);
 void addWord(string &input, string output);
-void replaceWord(string &input, string output);
+void replaceWord(string &input, string str, string output);
 void deleteWord(string &input, string output);
 void cycleAdd(string* mass, int array_length, int current);
 void cycleReplace(string* mass, int array_length, int current);
