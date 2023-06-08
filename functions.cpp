@@ -4,7 +4,7 @@ int inputInt(string message){
     int n;
     cout << message << endl;
     while(!(cin >> n)){
-        cout << "Error don't number" << endl;
+        cout << "Ошибка! Введено неверное значение" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');;
         cout << message;
@@ -31,7 +31,7 @@ string checkOpenInputFile(string message){
         filename = inputString(message);
         ifstream ifs(filename, ios::in);
         if(!ifs.is_open()){
-            cout << "Error. Path File is Not Corrected";
+            cout << "Ошибка! Путь файла введен некорректно";
             is_open = false;
         }else{
             ifs.close();
@@ -48,7 +48,7 @@ string checkOpenOutputFile(string message){
         filename = inputString(message);
         ofstream ofs(filename, ios::out);
         if(!ofs.is_open()){
-            cout << "Error. Path File is Not Corrected";
+            cout << "Ошибка! Путь файла введен некорректно";
             is_open = false;
         }else{
             ofs.close();
@@ -63,19 +63,19 @@ string checkOpenOutputFile(string message){
 int switchLine(int current_index, int array_length, bool under) {
     int count = 0;
     if(under){
-        count = inputInt("Switch Down");
+        count = inputInt("Опустьтся вниз");
         return current_index +  count;
     }else{
-        count = inputInt("Switch Up");
+        count = inputInt("Подняться на верх");
         return current_index - count;
     }
 }
 
 void outContext(string *mass, int array_length, int current) {
     int lines_count;
-    lines_count = inputInt("Enter number Line");
+    lines_count = inputInt("Введите номер строчки");
     for(int i = current; i < (current + lines_count); i++){
-        cout << "Line number" << i + 1 << " = " << *(mass + i) << endl;
+        cout << "Строка " << i + 1 << " = " << *(mass + i) << endl;
     }
 }
 
@@ -93,7 +93,7 @@ void addWord(string& input, string output){
 void cycleAdd(string* mass, int array_length, int current){
     string str;
     bool under = false;
-    str = str.append(" ") + inputString("Enter Word");
+    str = str.append(" ") + inputString("Введите слово");
     for(int i = current; i <= current; i++) {
         addWord(mass[i], str);
     }
@@ -117,8 +117,8 @@ void replaceWord(string &input,string str, string output) {
 void cycleReplace(string *mass, int array_length, int current) {
     string str;
     string ptr;
-    str = inputString("Enter String 1: ");
-    ptr = inputString("Enter String 2: ");
+    str = inputString("Введите слово которое хотите заменить: ");
+    ptr = inputString("Введите новое слово ");
     for(int i = current; i<=current; i++){
         replaceWord(mass[i], str, ptr);
     }
@@ -142,7 +142,7 @@ void deleteWord(string &input, string output) {
 
 void cycleDelete(string* mass, int array_length, int current) {
     string str;
-    str = inputString("Enter word: ");
+    str = inputString("Введите слово которое хотите удалить: ");
     for(int i = current; i <= current; i++){
         deleteWord(mass[i], str);
     }
@@ -153,7 +153,7 @@ void cycleDelete(string* mass, int array_length, int current) {
 
 void readFile(string* mass, int& array_length){
     string filename;
-    filename = checkOpenInputFile("Enter name File (Reading): ");
+    filename = checkOpenInputFile("Введите название файла: ");
     ifstream ifs(filename, ios::in);
     array_length = 0;
     while((!ifs.eof())&& (array_length < N)){
@@ -162,17 +162,17 @@ void readFile(string* mass, int& array_length){
         array_length++;
     }
     ifs.close();
-    cout << "File Readied" << endl;
+    cout << "Файл прочитан" << endl;
 }
 
 //Сохрание файла
 void saveFile(string* mass, int array_length){
     string filename;
-    filename = checkOpenOutputFile("Enter name File (Saving): ");
+    filename = checkOpenOutputFile("Введите название файла: ");
     ofstream ofs(filename, ios::out);
     for(int i = 0; i < array_length; i++){
         ofs << mass[i] << endl;
     }
     ofs.close();
-    cout << "File Saving" << endl;
+    cout << "Файл сохранен" << endl;
 };

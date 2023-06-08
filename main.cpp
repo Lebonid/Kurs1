@@ -7,17 +7,17 @@ int main() {
     int array_length = 0;
     int selected_index = 0;
     do{
-        cout << "Current Line - " << selected_index + 1 ;
-        cout << "\n1 - ReadFile";
-        cout << "\n2 - AddWord";
-        cout << "\n3 - ReplaceWord";
-        cout << "\n4 - DeleteWord";
-        cout << "\n5 - Output Text N line";
-        cout << "\n6 - SaveFile";
-        cout << "\n7 - Up line";
-        cout << "\n8 - Down line";
-        cout << "\n0 - Exit";
-        cout << "\nChoice point : ";
+        cout << "Текущая строчка - " << selected_index + 1 ;
+        cout << "\n1 - Считать текст из файла";
+        cout << "\n2 - Вставить слово";
+        cout << "\n3 - Заменить слово";
+        cout << "\n4 - Удалить слово";
+        cout << "\n5 - Вывести n строк из файла";
+        cout << "\n6 - Сохранить файл";
+        cout << "\n7 - Смещение вверх";
+        cout << "\n8 - Смещение вниз";
+        cout << "\n0 - Выход";
+        cout << "\nВведите номер пункта меню  : ";
         cin >> item;
         switch(item){
             case 1 :
@@ -47,7 +47,7 @@ int main() {
             case 0:
                 break;
             default:
-                cout << "Error!!!\n";
+                cout << "Ошибка\n";
                 continue;
         }
     }while(item != 0);
